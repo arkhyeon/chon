@@ -1,5 +1,4 @@
 import type { NextAuthConfig } from 'next-auth';
-import { User } from '@prisma/client';
 
 const adminRoute = ['/dashboard'];
 const authRoute = ['/management', '/user', '/profile'];
