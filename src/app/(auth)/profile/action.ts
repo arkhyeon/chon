@@ -46,9 +46,8 @@ const formSchema = z
   });
 
 export async function passwordMatch(prevState: any, formData: FormData) {
-  console.log('?');
   const result = await formSchema.spa({ password: formData.get('password') });
-  console.log(formData);
+
   if (result.success) {
     redirect('edit');
   } else {

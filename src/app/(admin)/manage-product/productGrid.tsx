@@ -6,7 +6,8 @@ import { AgGridReact } from 'ag-grid-react';
 import { ColDef } from 'ag-grid-community';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { deleteProductAction } from '@_admin/(product)/register-product/action';
+import { deleteProductAction } from '@_admin/manage-product/add/action';
+import { TextInput } from '@/src/app/components/InputGroup';
 
 interface GridProduct extends Product {
   index: string;
@@ -29,7 +30,8 @@ const ProductGrid: React.FC<{ productList: Product[] }> = ({ productList }) => {
       field: 'id',
       headerName: '',
       maxWidth: 50,
-      onCellClicked: ({ data }) => router.push(`/register-product/${data?.id}`),
+      onCellClicked: ({ data }) =>
+        router.push(`/manage-product/add/${data?.id}`),
     },
     { field: 'name', headerName: '제품명' },
     { field: 'description', headerName: '설명' },
@@ -54,19 +56,22 @@ const ProductGrid: React.FC<{ productList: Product[] }> = ({ productList }) => {
 
   return (
     <div className="ag-theme-quartz-dark h-full w-full">
-      <div className="flex justify-end space-x-4 pb-4">
-        <button
-          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-          onClick={() => deleteProduct()}
-        >
-          삭제
-        </button>
-        <Link
-          href="/register-product"
-          className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
-        >
-          제품 등록
-        </Link>
+      <div className="flex items-center justify-between gap-4 pb-4">
+        <TextInput id="query" title="구매자" />
+        <div className="flex gap-2">
+          <Link
+            href="/manage-product/add/"
+            className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+          >
+            제품 등록
+          </Link>
+          <button
+            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+            onClick={() => deleteProduct()}
+          >
+            삭제
+          </button>
+        </div>
       </div>
       <AgGridReact
         rowData={productList}

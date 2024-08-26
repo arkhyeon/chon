@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Modal from '@/src/app/components/modal';
-import Input from '@/src/app/components/input';
+import Input from '@/src/app/components/InputGroup';
 import { passwordMatch } from '@/src/app/(auth)/profile/action';
 import { useFormState } from 'react-dom';
 
@@ -24,7 +24,7 @@ function Page() {
           required
           errors={errors?.fieldErrors.password}
           minLength={6}
-          placeholder="비밀번호를 입력하세요"
+          title="비밀번호를 입력하세요"
         />
       </Modal>
     </form>

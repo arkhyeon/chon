@@ -1,11 +1,11 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
-import Input from '@/src/app/components/input';
+import Input from '@/src/app/components/InputGroup';
 import {
   createProduct,
   updateProduct,
-} from '@_admin/(product)/register-product/action';
+} from '@_admin/(product)/manage-product/add/action';
 import { Product } from '@prisma/client';
 import Tiptap from '@/src/ui/tiptap/tiptap';
 import { useState } from 'react';

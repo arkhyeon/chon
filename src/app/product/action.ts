@@ -5,12 +5,11 @@ import { notFound } from 'next/navigation';
 
 type InitialProducts = Prisma.PromiseReturnType<typeof getProductList>;
 
-export async function getProductList(): Promise<Product[]> {
+export async function getProductList(query: string): Promise<Product[]> {
   try {
     return await prisma.product.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
+      where: { name: { contains: query } },
+      orderBy: { createdAt: 'desc' },
     });
   } catch (error) {
     console.error('Failed to fetch getProductList:', error);

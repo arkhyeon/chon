@@ -2,7 +2,7 @@
 
 import { useFormState, useFormStatus } from 'react-dom';
 import { authenticate } from '@/src/app/(auth)/login/action';
-import Input from '@/src/app/components/input';
+import Input from '@/src/app/components/InputGroup';
 import Link from 'next/link';
 
 export default function LoginForm() {

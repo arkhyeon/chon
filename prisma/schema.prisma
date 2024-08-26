@@ -21,11 +21,11 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  // 관계: 사용자가 좋아요한 제품
-  likes     Like[]
-  // 관계: 사용자의 장바구니
-  cartItems CartItem[]
-  Payment   Payment[]
+  likes          Like[]
+  cartItems      CartItem[]
+  paymentHistory PaymentHistory[]
+  Question       Question[]
+  Answer         Answer[]
 }
 
 enum UserRole {
@@ -72,18 +72,56 @@ model Product {
   updatedAt    DateTime @updatedAt
 
   // 관계: 좋아요를 받은 사용자들
-  likes    Like[]
-  CartItem CartItem[]
+  likes          Like[]
+  cartItem       CartItem[]
+  paymentHistory PaymentHistory[]
 }
 
-// 관리자용 결제 관리 테이블
-model Payment {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [uid])
-  userId    Int
-  amount    Float
-  currency  String   @default("USD")
-  status    String // 예: "pending", "completed"
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model PaymentHistory {
+  id              Int      @id @default(autoincrement())
+  user            User     @relation(fields: [uid], references: [uid])
+  uid             Int
+  total           Int
+  payment_status  String   @default("pending")
+  delivery_status String   @default("processing")
+  address         String
+  address_detail  String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  paymentList PaymentList[] // 1:N 관계 설정
+  product     Product?      @relation(fields: [productId], references: [id])
+  productId   Int?
+}
+
+model PaymentList {
+  id             Int            @id @default(autoincrement())
+  paymentHistory PaymentHistory @relation(fields: [pid], references: [id])
+  pid            Int
+  productName    String
+  price          Int
+  amount         Int
+}
+
+model Question {
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String
+  user       User     @relation(fields: [userId], references: [uid])
+  userId     Int
+  isAnswered Boolean  @default(false) // 질문에 답변이 있는지 여부
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  answers    Answer[] // 1:N 관계 (질문에 대한 여러 답변)
+}
+
+model Answer {
+  id         Int      @id @default(autoincrement())
+  content    String
+  user       User     @relation(fields: [userId], references: [uid])
+  userId     Int
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

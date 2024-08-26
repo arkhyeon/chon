@@ -2,7 +2,7 @@
 
 import { useFormState, useFormStatus } from 'react-dom';
 import { createAccount, updateAccount } from '@/src/app/(auth)/signup/action';
-import Input from '@/src/app/components/input';
+import Input from '@/src/app/components/InputGroup';
 import { User } from '@prisma/client';
 
 export default function SingUpForm({ user }: { user?: User }) {
